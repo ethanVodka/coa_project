@@ -18,7 +18,7 @@ class CoaApp extends StatelessWidget {
       title: 'Snack&Bar COA',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: Container(),
+      home: const Scaffold(),
     );
   }
 }
