@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../Widgets/text_field.dart';
 
 class SignInPage extends StatefulWidget {
@@ -16,29 +15,29 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.amber,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: signInBody(context),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.brown,
+        body: SingleChildScrollView(
+          child: _signInBody(context),
         ),
       ),
     );
   }
 
-  Widget signInBody(BuildContext context) {
+  Widget _signInBody(BuildContext context) {
     return Form(
       key: _formKey,
       child: Column(
         children: [
           Image.asset("assets/logos/main_logo.png"),
-          userControll(context),
+          _userControll(context),
         ],
       ),
     );
   }
 
-  Widget userControll(BuildContext context) {
+  Widget _userControll(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,

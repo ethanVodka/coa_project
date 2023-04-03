@@ -2,6 +2,7 @@ import 'package:coa_project/src/domain/user_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options/firebase_options.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,9 +17,12 @@ class CoaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.light,
+      theme: ThemeData(
+        textTheme: GoogleFonts.sawarabiMinchoTextTheme(
+          Theme.of(context).textTheme,
+        ),
+      ),
+      themeMode: ThemeMode.dark,
       home: checkUser(),
     );
   }
