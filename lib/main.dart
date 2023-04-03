@@ -1,3 +1,4 @@
+import 'package:coa_project/src/domain/user_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options/firebase_options.dart';
@@ -15,10 +16,10 @@ class CoaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Snack&Bar COA',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: const Scaffold(),
+      themeMode: ThemeMode.light,
+      home: checkUser(),
     );
   }
 }
