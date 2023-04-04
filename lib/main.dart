@@ -1,13 +1,17 @@
-import 'package:coa_project/src/domain/user_model.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'dart:io';
+//import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'firebase_options/firebase_options.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
+//import 'firebase_options/firebase_options.dart';
+import 'app_theme.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+import 'navigation_home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const CoaApp());
+  //await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) => runApp(const CoaApp()));
 }
 
 class CoaApp extends StatelessWidget {
@@ -15,15 +19,23 @@ class CoaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: !kIsWeb && Platform.isAndroid ? Brightness.dark : Brightness.light,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarDividerColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ));
     return MaterialApp(
+      title: 'Flutter UI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        textTheme: GoogleFonts.sawarabiMinchoTextTheme(
-          Theme.of(context).textTheme,
-        ),
+        primarySwatch: Colors.blue,
+        textTheme: AppTheme.textTheme,
+        platform: TargetPlatform.iOS,
       ),
-      themeMode: ThemeMode.dark,
-      home: checkUser(),
+      home: const NavigationHomeScreen(),
     );
   }
 }
