@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 //ログイン済みユーザ
 User? user = FirebaseAuth.instance.currentUser;
+UserCredential? userCredential;
 
 //ログイン済みユーザかチェック
 Widget checkUser() {
@@ -17,10 +18,10 @@ Widget checkUser() {
     //既存ユーザー
     if (user?.uid == admin) {
       //承認済み
-      return const AdminHome();
+      return UserHome(user: user!);
     } else {
       //非承認
-      return const UserHome();
+      return const AdminHome();
     }
   }
 }

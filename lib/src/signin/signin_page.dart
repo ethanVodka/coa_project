@@ -1,3 +1,5 @@
+import 'package:coa_project/src/domain/user_model.dart';
+import 'package:coa_project/src/signin/siginin.dart';
 import 'package:flutter/material.dart';
 import '../Widgets/text_field.dart';
 
@@ -10,14 +12,13 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String email = '';
-  String password = '';
+  String? email;
+  String? password;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.brown,
         body: SingleChildScrollView(
           child: _signInBody(context),
         ),
@@ -69,12 +70,14 @@ class _SignInPageState extends State<SignInPage> {
         ),
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: ElevatedButton(
-            onPressed: () {},
-            child: const Text(
-              'ログイン',
-              textAlign: TextAlign.center,
-            ),
+          child: ElevatedButton.icon(
+            onPressed: () {
+              if (email == null || email == null) return;
+              onPressedFunc(context, email!, password!);
+              checkUser();
+            },
+            icon: const Icon(Icons.person),
+            label: const Text('ログイン'),
           ),
         ),
         Row(
