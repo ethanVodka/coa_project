@@ -28,30 +28,20 @@ class HomeDrawerState extends State<HomeDrawer> {
         icon: const Icon(Icons.home),
       ),
       DrawerList(
-        index: DrawerIndex.help,
-        labelName: 'Help',
-        isAssetsImage: true,
-        imageName: 'assets/images/supportIcon.png',
-      ),
-      DrawerList(
-        index: DrawerIndex.feedBack,
-        labelName: 'FeedBack',
-        icon: const Icon(Icons.help),
-      ),
-      DrawerList(
-        index: DrawerIndex.invite,
-        labelName: 'Invite Friend',
-        icon: const Icon(Icons.group),
-      ),
-      DrawerList(
-        index: DrawerIndex.share,
-        labelName: 'Rate the app',
-        icon: const Icon(Icons.share),
+        index: DrawerIndex.bookking,
+        labelName: 'Booking',
+        icon: const Icon(Icons.calendar_month),
       ),
       DrawerList(
         index: DrawerIndex.about,
         labelName: 'About Us',
         icon: const Icon(Icons.info),
+      ),
+      DrawerList(
+        index: DrawerIndex.help,
+        labelName: 'Help',
+        isAssetsImage: true,
+        imageName: 'assets/images/supportIcon.png',
       ),
     ];
   }
@@ -93,7 +83,7 @@ class HomeDrawerState extends State<HomeDrawer> {
                             ),
                             child: ClipRRect(
                               borderRadius: const BorderRadius.all(Radius.circular(60.0)),
-                              child: Image.asset('assets/images/userImage.png'),
+                              child: Image.asset('assets/images/main_logo.png'),
                             ),
                           ),
                         ),
@@ -103,7 +93,7 @@ class HomeDrawerState extends State<HomeDrawer> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8, left: 4),
                     child: Text(
-                      'Chris Hemsworth',
+                      'CoA',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: isLightMode ? AppTheme.grey : AppTheme.white,
@@ -263,12 +253,10 @@ class HomeDrawerState extends State<HomeDrawer> {
 
 enum DrawerIndex {
   home,
-  feedBack,
   help,
-  share,
   about,
-  invite,
-  testing,
+  bookking,
+  account,
 }
 
 class DrawerList {

@@ -1,17 +1,19 @@
 import 'dart:io';
-//import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-//import 'firebase_options/firebase_options.dart';
 import 'app_theme.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-import 'navigation_home_screen.dart';
+import 'firebase_options/firebase_options.dart';
+import 'user_navigation_home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) => runApp(const CoaApp()));
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await SystemChrome.setPreferredOrientations(
+    <DeviceOrientation>[DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+  ).then((_) => runApp(const CoaApp()));
 }
 
 class CoaApp extends StatelessWidget {
@@ -28,7 +30,6 @@ class CoaApp extends StatelessWidget {
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
     return MaterialApp(
-      title: 'Flutter UI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,

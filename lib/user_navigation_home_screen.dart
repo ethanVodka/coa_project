@@ -1,4 +1,7 @@
-import 'package:coa_project/user/user_home.dart';
+import 'package:coa_project/home_user.dart';
+import 'package:coa_project/user/user_about_screen.dart';
+import 'package:coa_project/user/user_booking_screen.dart';
+import 'package:coa_project/user/user_help_screen.dart';
 
 import '../app_theme.dart';
 import 'custom_drawer/drawer_user_controller.dart';
@@ -37,10 +40,8 @@ class NavigationHomeScreenState extends State<NavigationHomeScreen> {
             drawerWidth: MediaQuery.of(context).size.width * 0.75,
             onDrawerCall: (DrawerIndex drawerIndexdata) {
               changeIndex(drawerIndexdata);
-              //callback from drawer for replace screen as user need with passing DrawerIndex(Enum index)
             },
             screenView: screenView,
-            //we replace screen view as we need on navigate starting screens like MyHomePage, HelpScreen, FeedbackScreen, etc...
           ),
         ),
       ),
@@ -53,22 +54,22 @@ class NavigationHomeScreenState extends State<NavigationHomeScreen> {
       switch (drawerIndex) {
         case DrawerIndex.home:
           setState(() {
-            //screenView = const MyHomePage();
+            screenView = const UserHome();
+          });
+          break;
+        case DrawerIndex.bookking:
+          setState(() {
+            screenView = const BookingScreen();
+          });
+          break;
+        case DrawerIndex.about:
+          setState(() {
+            screenView = const AboutScreen();
           });
           break;
         case DrawerIndex.help:
           setState(() {
-            //screenView = HelpScreen();
-          });
-          break;
-        case DrawerIndex.feedBack:
-          setState(() {
-            //screenView = FeedbackScreen();
-          });
-          break;
-        case DrawerIndex.invite:
-          setState(() {
-            //screenView = InviteFriend();
+            screenView = const HelpScreen();
           });
           break;
         default:
