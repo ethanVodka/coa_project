@@ -1,10 +1,11 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'app_theme.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-
+import 'auth/signin_screen.dart';
 import 'firebase_options/firebase_options.dart';
 import 'user_navigation_home_screen.dart';
 
@@ -36,7 +37,18 @@ class CoaApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
-      home: const NavigationHomeScreen(),
+      home: _checkUser(),
     );
+  }
+
+  //前回ユーザーから遷移画面を確定
+  Widget _checkUser() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      // return const NavigationHomeScreen();
+      return const SignInScreen();
+    } else {
+      return const NavigationHomeScreen();
+    }
   }
 }

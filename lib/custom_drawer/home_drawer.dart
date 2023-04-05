@@ -43,6 +43,11 @@ class HomeDrawerState extends State<HomeDrawer> {
         isAssetsImage: true,
         imageName: 'assets/images/supportIcon.png',
       ),
+      DrawerList(
+        index: DrawerIndex.account,
+        labelName: 'Account',
+        icon: const Icon(Icons.person),
+      ),
     ];
   }
 

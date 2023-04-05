@@ -1,5 +1,6 @@
 import 'package:coa_project/home_user.dart';
 import 'package:coa_project/user/user_about_screen.dart';
+import 'package:coa_project/user/user_account_screen.dart';
 import 'package:coa_project/user/user_booking_screen.dart';
 import 'package:coa_project/user/user_help_screen.dart';
 
@@ -70,6 +71,11 @@ class NavigationHomeScreenState extends State<NavigationHomeScreen> {
         case DrawerIndex.help:
           setState(() {
             screenView = const HelpScreen();
+          });
+          break;
+        case DrawerIndex.account:
+          setState(() {
+            screenView = const AccountScreen();
           });
           break;
         default:
