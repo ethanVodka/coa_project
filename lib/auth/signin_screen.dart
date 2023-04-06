@@ -1,7 +1,6 @@
 import 'package:coa_project/auth/signin_model.dart';
 import 'package:coa_project/auth/signup_screen.dart';
 import 'package:coa_project/models/user_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../app_theme.dart';

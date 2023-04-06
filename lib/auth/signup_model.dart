@@ -24,7 +24,7 @@ Future<void> onSignUp(BuildContext context, String email, String password, Strin
         'password': password,
       });
     } on FirebaseException catch (e) {
-      if (e.code == 'weak^password') {
+      if (e.code == 'weak-password') {
         showDialog(
           context: context,
           builder: (context) {

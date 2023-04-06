@@ -11,6 +11,10 @@ class HomeList {
 
   static List<HomeList> homeList = [
     HomeList(
+      imagePath: 'assets/images/text_logo_opa.png',
+      //navigateScreen: DesignCourseHomeScreen(),
+    ),
+    HomeList(
       imagePath: 'assets/images/cocktail_1.png',
       //navigateScreen: IntroductionAnimationScreen(),
     ),
