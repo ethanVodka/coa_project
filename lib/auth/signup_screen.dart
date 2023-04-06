@@ -1,8 +1,5 @@
-import 'package:coa_project/auth/signin_model.dart';
-import 'package:coa_project/auth/signin_screen.dart';
 import 'package:coa_project/auth/signup_model.dart';
 import 'package:coa_project/models/user_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../app_theme.dart';
@@ -19,6 +16,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String? email;
   String? password;
   String? passwordCheck;
+  String? name;
+  String? phone;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -107,18 +106,48 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     return null;
                   },
                 ),
+                const SizedBox(height: 16.0),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: '名前',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return '名前を入力してください';
+                    } else {
+                      name = value;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16.0),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: '電話番号',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return '電話番号を入力してください';
+                    } else {
+                      phone = value;
+                    }
+                    return null;
+                  },
+                ),
                 const SizedBox(height: 32.0),
                 ElevatedButton.icon(
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   onPressed: () {
                     if (_formKey.currentState?.validate() == true) {
                       //入力データ確認
-                      if (email != null && password != null && passwordCheck != null) {
-                        onSignUp(context, email!, password!, passwordCheck!);
-                        if (userCredential != null) {
+                      if (email != null && password != null && passwordCheck != null && name != null && phone != null) {
+                        onSignUp(context, email!, password!, passwordCheck!, name!, phone!);
+                        if (userCredential.user != null) {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                              builder: (BuildContext context) => NavigationHomeScreen(user: user!),
+                              builder: (BuildContext context) => NavigationHomeScreen(user: userCredential.user!),
                             ),
                           );
                         }

@@ -94,10 +94,10 @@ class _SignInScreenState extends State<SignInScreen> {
                       //入力データ確認
                       if (email != null && password != null) {
                         onSignIn(context, email!, password!);
-                        if (userCredential != null) {
+                        if (userCredential.user != null) {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                              builder: (BuildContext context) => NavigationHomeScreen(user: user!),
+                              builder: (BuildContext context) => NavigationHomeScreen(user: userCredential.user!),
                             ),
                           );
                         }

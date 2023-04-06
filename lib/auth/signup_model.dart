@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../models/user_model.dart';
 import '../utils.dart';
 
-Future<void> onSignUp(BuildContext context, String email, String password, String passwordCheck) async {
+Future<void> onSignUp(BuildContext context, String email, String password, String passwordCheck, String name, String phone) async {
   if (password != passwordCheck) {
     showDialog(
       context: context,
@@ -15,7 +16,13 @@ Future<void> onSignUp(BuildContext context, String email, String password, Strin
   } else {
     try {
       userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-      user = FirebaseAuth.instance.currentUser!;
+      final User user = userCredential.user!;
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).collection('register').doc('user').set({
+        'name': name,
+        'phone': phone,
+        'email': email,
+        'password': password,
+      });
     } on FirebaseException catch (e) {
       if (e.code == 'weak^password') {
         showDialog(

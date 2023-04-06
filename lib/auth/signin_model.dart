@@ -7,7 +7,6 @@ import '../utils.dart';
 Future<void> onSignIn(BuildContext context, String email, String password) async {
   try {
     userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-    user = FirebaseAuth.instance.currentUser!;
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
       showDialog(
