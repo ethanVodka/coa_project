@@ -1,10 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'app_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'models/user_homelist.dart';
 
 class UserHome extends StatefulWidget {
-  const UserHome({Key? key}) : super(key: key);
+  const UserHome({super.key});
 
   @override
   UserHomeState createState() => UserHomeState();

@@ -1,5 +1,9 @@
+import 'package:coa_project/auth/signin_screen.dart';
+
 import '../app_theme.dart';
 import 'package:flutter/material.dart';
+
+import '../auth/signout_model.dart';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer({Key? key, this.screenIndex, this.iconAnimationController, this.callBackIndex}) : super(key: key);
@@ -163,7 +167,12 @@ class HomeDrawerState extends State<HomeDrawer> {
   }
 
   void onTapped() {
-    //print('Doing Something...'); // Print to console.
+    onSignOut(context);
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (BuildContext context) => const SignInScreen(),
+      ),
+    );
   }
 
   Widget inkwell(DrawerList listData) {

@@ -45,10 +45,10 @@ class CoaApp extends StatelessWidget {
   Widget _checkUser() {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      // return const NavigationHomeScreen();
+      // return NavigationHomeScreen(user: user);
       return const SignInScreen();
     } else {
-      return const NavigationHomeScreen();
+      return const SignInScreen();
     }
   }
 }
