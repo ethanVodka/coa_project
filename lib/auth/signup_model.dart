@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../models/user_model.dart';
+import '../user_navigation_home_screen.dart';
 import '../utils.dart';
 
 Future<void> onSignUp(BuildContext context, String email, String password, String passwordCheck, String name, String phone) async {
@@ -10,12 +10,12 @@ Future<void> onSignUp(BuildContext context, String email, String password, Strin
     showDialog(
       context: context,
       builder: (context) {
-        return dialog(context, 'パスワードを確認してください', true);
+        return dialog(context, 'パスワードを確認してください');
       },
     );
   } else {
     try {
-      userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
       final User user = userCredential.user!;
       await FirebaseFirestore.instance.collection('users').doc(user.uid).collection('register').doc('user').set({
         'name': name,
@@ -23,19 +23,27 @@ Future<void> onSignUp(BuildContext context, String email, String password, Strin
         'email': email,
         'password': password,
       });
+      if (userCredential.user != null) {
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (BuildContext context) => NavigationHomeScreen(user: userCredential.user!),
+          ),
+        );
+      }
     } on FirebaseException catch (e) {
       if (e.code == 'weak-password') {
         showDialog(
           context: context,
           builder: (context) {
-            return dialog(context, 'パスワードが短すぎます', true);
+            return dialog(context, 'パスワードが短すぎます');
           },
         );
       } else if (e.code == 'email-already-in-use') {
         showDialog(
           context: context,
           builder: (context) {
-            return dialog(context, 'メールアドレスは既に使われています', true);
+            return dialog(context, 'メールアドレスは既に使われています');
           },
         );
       }

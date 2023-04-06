@@ -1,9 +1,8 @@
 import 'package:coa_project/auth/signup_model.dart';
-import 'package:coa_project/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 import '../app_theme.dart';
-import '../user_navigation_home_screen.dart';
+
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -144,13 +143,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       //入力データ確認
                       if (email != null && password != null && passwordCheck != null && name != null && phone != null) {
                         onSignUp(context, email!, password!, passwordCheck!, name!, phone!);
-                        if (userCredential.user != null) {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => NavigationHomeScreen(user: userCredential.user!),
-                            ),
-                          );
-                        }
                       }
                     } else {
                       //入力不備

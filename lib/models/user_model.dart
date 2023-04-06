@@ -1,4 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
+class AppUser {
+  //コンストラクター
+  AppUser(this.name, this.phone, this.email);
 
-late UserCredential userCredential;
-  
+  String name;
+  String phone;
+  String email;
+}

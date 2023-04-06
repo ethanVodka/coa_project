@@ -7,7 +7,6 @@ import 'app_theme.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'auth/signin_screen.dart';
 import 'firebase_options/firebase_options.dart';
-import 'user_navigation_home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

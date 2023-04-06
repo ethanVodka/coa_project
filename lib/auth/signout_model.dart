@@ -10,7 +10,7 @@ Future<void> onSignOut(BuildContext context) async {
     showDialog(
       context: context,
       builder: (context) {
-        return dialog(context, 'ログアウトに失敗しました', true);
+        return dialog(context, 'ログアウトに失敗しました');
       },
     );
   }

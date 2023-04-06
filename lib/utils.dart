@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
-AlertDialog dialog(BuildContext context, String msg, bool isError) {
-  String? title = isError ? 'エラー' : 'インフォーメーション';
+import 'app_theme.dart';
+
+AlertDialog dialog(BuildContext context, String msg) {
+  var brightness = MediaQuery.of(context).platformBrightness;
+  bool isLightMode = brightness == Brightness.light;
 
   return AlertDialog(
-    title: Text(title),
+    backgroundColor: isLightMode == true ? AppTheme.white : AppTheme.nearlyBlack,
     content: Text(msg),
     actions: [
       TextButton(
