@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-
 import '../app_theme.dart';
 
-class AccountScreen extends StatefulWidget {
-  const AccountScreen({super.key});
+class AminManagementScreen extends StatefulWidget {
+  const AminManagementScreen({super.key});
 
   @override
-  State<AccountScreen> createState() => _AccountScreenState();
+  State<AminManagementScreen> createState() => _AminManagementScreenState();
 }
 
-class _AccountScreenState extends State<AccountScreen> {
+class _AminManagementScreenState extends State<AminManagementScreen> {
   @override
   Widget build(BuildContext context) {
     var brightness = MediaQuery.of(context).platformBrightness;
@@ -53,7 +52,7 @@ class _AccountScreenState extends State<AccountScreen> {
             child: Padding(
               padding: const EdgeInsets.only(top: 4),
               child: Text(
-                'Account',
+                'Management',
                 style: TextStyle(
                   fontSize: 22,
                   color: isLightMode ? AppTheme.darkText : AppTheme.white,

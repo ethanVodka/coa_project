@@ -9,7 +9,7 @@ Future<void> onSignIn(BuildContext context, String email, String password) async
   try {
     UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
     if (userCredential.user != null) {
-      if (userCredential.user!.uid == admin) {
+      if (userCredential.user!.uid == admin || userCredential.user!.uid == admin_2) {
         // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(

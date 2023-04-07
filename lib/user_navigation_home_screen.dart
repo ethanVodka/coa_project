@@ -1,16 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coa_project/home_user.dart';
-import 'package:coa_project/user/user_about_screen.dart';
-import 'package:coa_project/user/user_account_screen.dart';
-import 'package:coa_project/user/user_booking_screen.dart';
-import 'package:coa_project/user/user_help_screen.dart';
+import 'package:coa_project/screen_user/user_about_screen.dart';
+import 'package:coa_project/screen_user/user_account_screen.dart';
+import 'package:coa_project/screen_user/user_booking_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import '../app_theme.dart';
 import 'custom_drawer/user_drawer_user_controller.dart';
 import 'custom_drawer/user_home_drawer.dart';
 import 'package:flutter/material.dart';
-
 import 'models/user_model.dart';
 
 class UserNavigationHomeScreen extends StatefulWidget {
@@ -84,11 +81,6 @@ class UserNavigationHomeScreenState extends State<UserNavigationHomeScreen> {
         case DrawerIndex.about:
           setState(() {
             screenView = const AboutScreen();
-          });
-          break;
-        case DrawerIndex.help:
-          setState(() {
-            screenView = const HelpScreen();
           });
           break;
         case DrawerIndex.account:

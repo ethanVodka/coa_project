@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../app_theme.dart';
 
 class AdminAccountScreen extends StatefulWidget {

@@ -41,12 +41,6 @@ class UserHomeDrawerState extends State<UserHomeDrawer> {
         icon: const Icon(Icons.info),
       ),
       DrawerList(
-        index: DrawerIndex.help,
-        labelName: 'Help',
-        isAssetsImage: true,
-        imageName: 'assets/images/supportIcon.png',
-      ),
-      DrawerList(
         index: DrawerIndex.account,
         labelName: 'Account',
         icon: const Icon(Icons.person),
@@ -266,7 +260,6 @@ class UserHomeDrawerState extends State<UserHomeDrawer> {
 
 enum DrawerIndex {
   home,
-  help,
   about,
   bookking,
   account,

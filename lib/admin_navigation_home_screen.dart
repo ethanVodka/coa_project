@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coa_project/admin/admin_account.dart';
+import 'package:coa_project/screen_admin/admin_account.dart';
 import 'package:coa_project/home_admin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../app_theme.dart';
-import 'admin/admin_management.dart';
+import 'screen_admin/admin_management.dart';
 import 'custom_drawer/admin_drawer_user_controller.dart';
 import 'custom_drawer/admin_home_drawer.dart';
 import 'package:flutter/material.dart';

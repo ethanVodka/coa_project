@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-
 import '../app_theme.dart';
 
-class HelpScreen extends StatefulWidget {
-  const HelpScreen({super.key});
+class AboutScreen extends StatefulWidget {
+  const AboutScreen({super.key});
 
   @override
-  State<HelpScreen> createState() => _HelpScreenState();
+  State<AboutScreen> createState() => _AboutScreenState();
 }
 
-class _HelpScreenState extends State<HelpScreen> {
+class _AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     var brightness = MediaQuery.of(context).platformBrightness;
@@ -53,7 +52,7 @@ class _HelpScreenState extends State<HelpScreen> {
             child: Padding(
               padding: const EdgeInsets.only(top: 4),
               child: Text(
-                'Help',
+                'About Us',
                 style: TextStyle(
                   fontSize: 22,
                   color: isLightMode ? AppTheme.darkText : AppTheme.white,
