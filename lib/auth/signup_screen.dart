@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../app_theme.dart';
 
-
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -25,9 +24,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     bool isLightMode = brightness == Brightness.light;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: isLightMode == false ? AppTheme.white : AppTheme.nearlyBlack,
-      ),
       backgroundColor: isLightMode == true ? AppTheme.white : AppTheme.nearlyBlack,
       body: SingleChildScrollView(
         child: Form(
@@ -38,6 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                const SizedBox(height: 60.0),
                 SizedBox(
                   width: 100,
                   height: 100,
@@ -60,9 +57,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'メールアドレス',
-                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(
+                      color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+                    ),
+                    border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -75,9 +75,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'パスワード',
-                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(
+                      color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+                    ),
+                    border: const OutlineInputBorder(),
                   ),
                   obscureText: true,
                   validator: (value) {
@@ -91,9 +94,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
+                    labelStyle: TextStyle(
+                      color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+                    ),
                     labelText: 'パスワード確認',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                   ),
                   obscureText: true,
                   validator: (value) {
@@ -107,9 +113,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
+                    labelStyle: TextStyle(
+                      color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+                    ),
                     labelText: '名前',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -122,9 +131,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
+                    labelStyle: TextStyle(
+                      color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+                    ),
                     labelText: '電話番号',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -137,7 +149,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 32.0),
                 ElevatedButton.icon(
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(isLightMode ? AppTheme.nearlyBlack : AppTheme.white)),
                   onPressed: () {
                     if (_formKey.currentState?.validate() == true) {
                       //入力データ確認
@@ -148,16 +160,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       //入力不備
                     }
                   },
-                  icon: const Icon(Icons.person),
-                  label: const Text(
+                  icon: Icon(
+                    Icons.person,
+                    color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
+                  ),
+                  label: Text(
                     'SIGNUP',
                     style: TextStyle(
                       fontSize: 20,
-                      color: AppTheme.white,
+                      color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
+                ElevatedButton.icon(
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(isLightMode ? AppTheme.nearlyBlack : AppTheme.white)),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back_ios_new, color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack),
+                  label: const Text(''),
+                )
               ],
             ),
           ),

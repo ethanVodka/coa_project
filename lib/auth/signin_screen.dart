@@ -22,7 +22,7 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
     animationController = AnimationController(duration: const Duration(milliseconds: 2000), vsync: this);
     super.initState();
   }
-  
+
   Future<bool> getData() async {
     await Future<dynamic>.delayed(const Duration(milliseconds: 0));
     return true;
@@ -66,9 +66,12 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
                   ),
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'メールアドレス',
-                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(
+                      color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+                    ),
+                    border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -81,9 +84,12 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'パスワード',
-                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(
+                      color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+                    ),
+                    border: const OutlineInputBorder(),
                   ),
                   obscureText: true,
                   validator: (value) {
@@ -97,7 +103,7 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
                 ),
                 const SizedBox(height: 32.0),
                 ElevatedButton.icon(
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(isLightMode ? AppTheme.nearlyBlack : AppTheme.white)),
                   onPressed: () {
                     if (_formKey.currentState?.validate() == true) {
                       //入力データ確認
@@ -108,12 +114,12 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
                       //入力不備
                     }
                   },
-                  icon: const Icon(Icons.person),
-                  label: const Text(
+                  icon: Icon(Icons.person, color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack),
+                  label: Text(
                     'SIGNIN',
                     style: TextStyle(
                       fontSize: 20,
-                      color: AppTheme.white,
+                      color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -121,7 +127,12 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('新規登録は'),
+                    Text(
+                      '新規登録は',
+                      style: TextStyle(
+                        color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+                      ),
+                    ),
                     TextButton(
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => const SignUpScreen()));

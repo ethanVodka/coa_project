@@ -7,6 +7,9 @@ AlertDialog dialog(BuildContext context, String msg) {
   bool isLightMode = brightness == Brightness.light;
 
   return AlertDialog(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10.0),
+    ),
     backgroundColor: isLightMode == true ? AppTheme.white : AppTheme.nearlyBlack,
     content: Text(msg),
     actions: [
@@ -50,4 +53,49 @@ Widget appBar(BuildContext context, String title) {
       ],
     ),
   );
+}
+
+Future<void> showSnackBar(BuildContext context, String msg, bool isSuccess) async {
+  final snackBar = SnackBar(
+    content: Row(
+      children: [
+        _checkIsSuccess(isSuccess),
+        const SizedBox(width: 20),
+        Center(
+          child: Text(
+            msg,
+            style: const TextStyle(color: Colors.black),
+          ),
+        ),
+      ],
+    ),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+    showCloseIcon: true,
+    onVisible: () {},
+    elevation: 4.0,
+    backgroundColor: Colors.white,
+    closeIconColor: Colors.grey,
+    clipBehavior: Clip.hardEdge,
+    dismissDirection: DismissDirection.horizontal,
+    behavior: SnackBarBehavior.floating,
+    padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
+    margin: const EdgeInsetsDirectional.all(16),
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+Icon _checkIsSuccess(bool isSuccess) {
+  if (isSuccess) {
+    return const Icon(
+      Icons.circle_outlined,
+      color: Colors.green,
+    );
+  } else {
+    return const Icon(
+      Icons.cancel_outlined,
+      color: Colors.red,
+    );
+  }
 }

@@ -1,5 +1,4 @@
 import 'package:coa_project/auth/signin_screen.dart';
-
 import '../app_theme.dart';
 import 'package:flutter/material.dart';
 

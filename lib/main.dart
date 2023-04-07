@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:coa_project/user_navigation_home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -44,8 +45,7 @@ class CoaApp extends StatelessWidget {
   Widget _checkUser() {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      // return NavigationHomeScreen(user: user);
-      return const SignInScreen();
+      return UserNavigationHomeScreen(user: user);
     } else {
       return const SignInScreen();
     }

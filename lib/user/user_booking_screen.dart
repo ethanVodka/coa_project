@@ -47,19 +47,9 @@ class _BookingScreenState extends State<BookingScreen> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const SizedBox(height: 30),
-                    Text(
-                      widget.user.phone,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 40,
-                        color: isLightMode ? AppTheme.darkText : AppTheme.white,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
                     const SizedBox(height: 40),
                     ElevatedButton(
-                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(isLightMode ? AppTheme.nearlyBlack : AppTheme.white)),
                       onPressed: () {
                         DatePicker.showDatePicker(
                           context,
@@ -73,18 +63,21 @@ class _BookingScreenState extends State<BookingScreen> {
                           locale: LocaleType.jp,
                         );
                       },
-                      child: Text(
-                        _selectedDate.toString().substring(0, 10),
-                        style: const TextStyle(
-                          fontSize: 40,
-                          color: AppTheme.white,
-                          fontWeight: FontWeight.w700,
+                      child: Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: Text(
+                          _selectedDate.toString().substring(0, 10),
+                          style: TextStyle(
+                            fontSize: 40,
+                            color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 40),
                     ElevatedButton(
-                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(isLightMode ? AppTheme.nearlyBlack : AppTheme.white)),
                       onPressed: () {
                         showTimePicker(
                           context: context,
@@ -99,9 +92,9 @@ class _BookingScreenState extends State<BookingScreen> {
                       },
                       child: Text(
                         _selectedTime.format(context),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 40,
-                          color: AppTheme.white,
+                          color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -118,7 +111,7 @@ class _BookingScreenState extends State<BookingScreen> {
                               }
                             });
                           },
-                          icon: const Icon(Icons.remove),
+                          icon: Icon(Icons.remove, color: isLightMode ? AppTheme.darkText : AppTheme.white),
                         ),
                         Text(
                           _num.toString(),
@@ -136,19 +129,19 @@ class _BookingScreenState extends State<BookingScreen> {
                               }
                             });
                           },
-                          icon: const Icon(Icons.add),
+                          icon: Icon(Icons.add, color: isLightMode ? AppTheme.darkText : AppTheme.white),
                         ),
                       ],
                     ),
                     Expanded(
                       child: ClipRRect(
                         borderRadius: const BorderRadius.all(Radius.circular(60.0)),
-                        child: Image.asset('assets/images/main_logo.png'),
+                        child: Image.asset('assets/images/booking.png'),
                       ),
                     ),
                     ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.black),
+                        backgroundColor: MaterialStateProperty.all(isLightMode ? AppTheme.nearlyBlack : AppTheme.white),
                       ),
                       onPressed: () {
                         showDialog(
@@ -156,7 +149,9 @@ class _BookingScreenState extends State<BookingScreen> {
                           barrierDismissible: false,
                           builder: (context) {
                             return AlertDialog(
-                              alignment: Alignment.bottomCenter,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
                               title: const Text("確認", textAlign: TextAlign.center),
                               content: const Text("予約内容に間違いありませんか？"),
                               actions: [
@@ -180,7 +175,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         'Booking',
                         style: TextStyle(
                           fontSize: 23,
-                          color: isLightMode ? AppTheme.white : AppTheme.white,
+                          color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -209,13 +204,9 @@ class _BookingScreenState extends State<BookingScreen> {
         },
       );
       Navigator.pop(context);
+      showSnackBar(context, '予約完了', true);
     } catch (e) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return dialog(context, '予約に失敗しました');
-        },
-      );
+      showSnackBar(context, '予約失敗', false);
     }
   }
 }
