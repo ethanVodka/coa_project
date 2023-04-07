@@ -1,9 +1,11 @@
 import 'package:coa_project/custom_drawer/user_home_drawer.dart';
 import 'package:flutter/material.dart';
 import '../app_theme.dart';
+import '../models/user_model.dart';
 
 class UserDrawerUserController extends StatefulWidget {
   const UserDrawerUserController({
+    required this.appUser,
     Key? key,
     this.drawerWidth = 250,
     this.onDrawerCall,
@@ -14,6 +16,7 @@ class UserDrawerUserController extends StatefulWidget {
     this.screenIndex,
   }) : super(key: key);
 
+  final AppUser appUser;
   final double drawerWidth;
   final Function(DrawerIndex)? onDrawerCall;
   final Widget? screenView;
@@ -99,6 +102,7 @@ class UserDrawerUserControllerState extends State<UserDrawerUserController> with
                     return Transform(
                       transform: Matrix4.translationValues(scrollController!.offset, 0.0, 0.0),
                       child: UserHomeDrawer(
+                        appUser: widget.appUser,
                         screenIndex: widget.screenIndex ?? DrawerIndex.home,
                         iconAnimationController: iconAnimationController,
                         callBackIndex: (DrawerIndex indexType) {

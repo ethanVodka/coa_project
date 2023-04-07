@@ -66,6 +66,7 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
                   ),
                 ),
                 TextFormField(
+                  style: TextStyle(color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white),
                   decoration: InputDecoration(
                     labelText: 'メールアドレス',
                     labelStyle: TextStyle(
@@ -84,6 +85,7 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
+                  style: TextStyle(color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white),
                   decoration: InputDecoration(
                     labelText: 'パスワード',
                     labelStyle: TextStyle(

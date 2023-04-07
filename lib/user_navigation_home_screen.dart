@@ -52,6 +52,7 @@ class UserNavigationHomeScreenState extends State<UserNavigationHomeScreen> {
         child: Scaffold(
           backgroundColor: AppTheme.nearlyWhite,
           body: UserDrawerUserController(
+            appUser: appUser!,
             screenIndex: drawerIndex,
             drawerWidth: MediaQuery.of(context).size.width * 0.75,
             onDrawerCall: (DrawerIndex drawerIndexdata) {

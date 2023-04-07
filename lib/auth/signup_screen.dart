@@ -57,6 +57,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 TextFormField(
+                  style: TextStyle(color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white),
                   decoration: InputDecoration(
                     labelText: 'メールアドレス',
                     labelStyle: TextStyle(
@@ -75,6 +76,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
+                  style: TextStyle(color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white),
                   decoration: InputDecoration(
                     labelText: 'パスワード',
                     labelStyle: TextStyle(
@@ -94,6 +96,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
+                  style: TextStyle(color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white),
                   decoration: InputDecoration(
                     labelStyle: TextStyle(
                       color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
@@ -113,6 +116,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
+                  style: TextStyle(color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white),
                   decoration: InputDecoration(
                     labelStyle: TextStyle(
                       color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
@@ -131,6 +135,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
+                  style: TextStyle(color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white),
                   decoration: InputDecoration(
                     labelStyle: TextStyle(
                       color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
