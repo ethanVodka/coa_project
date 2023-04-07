@@ -1,6 +1,7 @@
+import 'package:coa_project/const.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import '../admin_navigation_home_screen.dart';
 import '../user_navigation_home_screen.dart';
 import '../utils.dart';
 
@@ -8,12 +9,21 @@ Future<void> onSignIn(BuildContext context, String email, String password) async
   try {
     UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
     if (userCredential.user != null) {
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (BuildContext context) => UserNavigationHomeScreen(user: userCredential.user!),
-        ),
-      );
+      if (userCredential.user!.uid == admin) {
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (BuildContext context) => AdminNavigationHomeScreen(user: userCredential.user!),
+          ),
+        );
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (BuildContext context) => UserNavigationHomeScreen(user: userCredential.user!),
+          ),
+        );
+      }
     }
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
