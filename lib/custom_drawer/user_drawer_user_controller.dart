@@ -1,9 +1,9 @@
+import 'package:coa_project/custom_drawer/user_home_drawer.dart';
 import 'package:flutter/material.dart';
 import '../app_theme.dart';
-import 'home_drawer.dart';
 
-class DrawerUserController extends StatefulWidget {
-  const DrawerUserController({
+class UserDrawerUserController extends StatefulWidget {
+  const UserDrawerUserController({
     Key? key,
     this.drawerWidth = 250,
     this.onDrawerCall,
@@ -23,10 +23,10 @@ class DrawerUserController extends StatefulWidget {
   final DrawerIndex? screenIndex;
 
   @override
-  DrawerUserControllerState createState() => DrawerUserControllerState();
+  UserDrawerUserControllerState createState() => UserDrawerUserControllerState();
 }
 
-class DrawerUserControllerState extends State<DrawerUserController> with TickerProviderStateMixin {
+class UserDrawerUserControllerState extends State<UserDrawerUserController> with TickerProviderStateMixin {
   ScrollController? scrollController;
   AnimationController? iconAnimationController;
   AnimationController? animationController;
@@ -101,7 +101,7 @@ class DrawerUserControllerState extends State<DrawerUserController> with TickerP
                     return Transform(
                       //transform we use for the stable drawer  we, not need to move with scroll view
                       transform: Matrix4.translationValues(scrollController!.offset, 0.0, 0.0),
-                      child: HomeDrawer(
+                      child: UserHomeDrawer(
                         screenIndex: widget.screenIndex ?? DrawerIndex.home,
                         iconAnimationController: iconAnimationController,
                         callBackIndex: (DrawerIndex indexType) {

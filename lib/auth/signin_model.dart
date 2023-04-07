@@ -11,7 +11,7 @@ Future<void> onSignIn(BuildContext context, String email, String password) async
       // ignore: use_build_context_synchronously
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (BuildContext context) => NavigationHomeScreen(user: userCredential.user!),
+          builder: (BuildContext context) => UserNavigationHomeScreen(user: userCredential.user!),
         ),
       );
     }

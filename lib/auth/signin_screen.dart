@@ -11,10 +11,22 @@ class SignInScreen extends StatefulWidget {
   State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMixin {
   String? email;
   String? password;
+  AnimationController? animationController;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    animationController = AnimationController(duration: const Duration(milliseconds: 2000), vsync: this);
+    super.initState();
+  }
+  
+  Future<bool> getData() async {
+    await Future<dynamic>.delayed(const Duration(milliseconds: 0));
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {

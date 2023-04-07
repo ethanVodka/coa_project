@@ -7,21 +7,21 @@ import 'package:coa_project/user/user_help_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../app_theme.dart';
-import 'custom_drawer/drawer_user_controller.dart';
-import 'custom_drawer/home_drawer.dart';
+import 'custom_drawer/user_drawer_user_controller.dart';
+import 'custom_drawer/user_home_drawer.dart';
 import 'package:flutter/material.dart';
 
 import 'models/user_model.dart';
 
-class NavigationHomeScreen extends StatefulWidget {
+class UserNavigationHomeScreen extends StatefulWidget {
   final User user;
-  const NavigationHomeScreen({required this.user, super.key});
+  const UserNavigationHomeScreen({required this.user, super.key});
 
   @override
-  NavigationHomeScreenState createState() => NavigationHomeScreenState();
+  UserNavigationHomeScreenState createState() => UserNavigationHomeScreenState();
 }
 
-class NavigationHomeScreenState extends State<NavigationHomeScreen> {
+class UserNavigationHomeScreenState extends State<UserNavigationHomeScreen> {
   Widget? screenView;
   DrawerIndex? drawerIndex;
   AppUser? appUser;
@@ -54,7 +54,7 @@ class NavigationHomeScreenState extends State<NavigationHomeScreen> {
         bottom: false,
         child: Scaffold(
           backgroundColor: AppTheme.nearlyWhite,
-          body: DrawerUserController(
+          body: UserDrawerUserController(
             screenIndex: drawerIndex,
             drawerWidth: MediaQuery.of(context).size.width * 0.75,
             onDrawerCall: (DrawerIndex drawerIndexdata) {
@@ -78,7 +78,7 @@ class NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;
         case DrawerIndex.bookking:
           setState(() {
-            screenView = const BookingScreen();
+            screenView = BookingScreen(user: appUser!);
           });
           break;
         case DrawerIndex.about:

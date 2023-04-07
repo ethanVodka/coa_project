@@ -1,4 +1,3 @@
-
 import 'app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -129,7 +128,7 @@ class UserHomeState extends State<UserHome> with TickerProviderStateMixin {
               child: Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  'Snack & Bar CoA',
+                  'Home',
                   style: TextStyle(
                     fontSize: 22,
                     color: isLightMode ? AppTheme.darkText : AppTheme.white,

@@ -5,18 +5,18 @@ import 'package:flutter/material.dart';
 
 import '../auth/signout_model.dart';
 
-class HomeDrawer extends StatefulWidget {
-  const HomeDrawer({Key? key, this.screenIndex, this.iconAnimationController, this.callBackIndex}) : super(key: key);
+class UserHomeDrawer extends StatefulWidget {
+  const UserHomeDrawer({Key? key, this.screenIndex, this.iconAnimationController, this.callBackIndex}) : super(key: key);
 
   final AnimationController? iconAnimationController;
   final DrawerIndex? screenIndex;
   final Function(DrawerIndex)? callBackIndex;
 
   @override
-  HomeDrawerState createState() => HomeDrawerState();
+  UserHomeDrawerState createState() => UserHomeDrawerState();
 }
 
-class HomeDrawerState extends State<HomeDrawer> {
+class UserHomeDrawerState extends State<UserHomeDrawer> {
   List<DrawerList>? drawerList;
   @override
   void initState() {
