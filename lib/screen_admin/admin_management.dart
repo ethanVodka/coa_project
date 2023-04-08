@@ -23,7 +23,11 @@ class _AminManagementScreenState extends State<AminManagementScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             appBar(context, 'Management'),
-            Expanded(child: Container()),
+            Expanded(
+              child: Container(
+                  //ssssss
+                  ),
+            ),
           ],
         ),
       ),

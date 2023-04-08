@@ -14,9 +14,37 @@ class BookingScreen extends StatefulWidget {
 }
 
 class _BookingScreenState extends State<BookingScreen> {
-  DateTime _selectedDate = DateTime.now();
-  TimeOfDay _selectedTime = TimeOfDay.now();
-  int _num = 1;
+  DateTime selectedDate = DateTime.now();
+  TimeOfDay selectedTime = TimeOfDay.now();
+  int bookingNum = 0;
+  //今後変更箇所
+  int limitNum = 8;
+  int selectNum = 0;
+  void getCollections() async {
+    int num = 0;
+    DateTime start = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 0, 0);
+    DateTime end = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 23, 59, 59);
+    QuerySnapshot collectionList = await FirebaseFirestore.instance.collection('booking_list').where('date', isGreaterThanOrEqualTo: start).where('date', isLessThanOrEqualTo: end).get();
+    List<QueryDocumentSnapshot> documents = collectionList.docs;
+    if (documents.isNotEmpty) {
+      for (var doc in documents) {
+        num += int.parse(doc['num'].toString());
+        setState(() {
+          bookingNum = num;
+        });
+      }
+    } else {
+      setState(() {
+        bookingNum = 0;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getCollections();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,17 +84,18 @@ class _BookingScreenState extends State<BookingScreen> {
                           showTitleActions: true,
                           onConfirm: (date) {
                             setState(() {
-                              _selectedDate = date;
+                              selectedDate = date;
+                              getCollections();
                             });
                           },
-                          currentTime: _selectedDate,
+                          currentTime: selectedDate,
                           locale: LocaleType.jp,
                         );
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(24.0),
                         child: Text(
-                          _selectedDate.toString().substring(0, 10),
+                          selectedDate.toString().substring(0, 10),
                           style: TextStyle(
                             fontSize: 40,
                             color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
@@ -81,17 +110,17 @@ class _BookingScreenState extends State<BookingScreen> {
                       onPressed: () {
                         showTimePicker(
                           context: context,
-                          initialTime: _selectedTime,
+                          initialTime: selectedTime,
                         ).then((value) {
                           if (value != null) {
                             setState(() {
-                              _selectedTime = value;
+                              selectedTime = value;
                             });
                           }
                         });
                       },
                       child: Text(
-                        _selectedTime.format(context),
+                        selectedTime.format(context),
                         style: TextStyle(
                           fontSize: 40,
                           color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
@@ -105,29 +134,32 @@ class _BookingScreenState extends State<BookingScreen> {
                       children: [
                         IconButton(
                           onPressed: () {
-                            setState(() {
-                              if (_num > 1) {
-                                _num--;
-                              }
-                            });
+                            if (selectNum != 0) {
+                              setState(() {
+                                selectNum--;
+                              });
+                            }
                           },
                           icon: Icon(Icons.remove, color: isLightMode ? AppTheme.darkText : AppTheme.white),
                         ),
-                        Text(
-                          _num.toString(),
-                          style: TextStyle(
-                            fontSize: 40,
-                            color: isLightMode ? AppTheme.darkText : AppTheme.white,
-                            fontWeight: FontWeight.w700,
+                        Padding(
+                          padding: const EdgeInsets.all(24.0),
+                          child: Text(
+                            '$selectNum/${limitNum - bookingNum}',
+                            style: TextStyle(
+                              fontSize: 40,
+                              color: isLightMode ? AppTheme.darkText : AppTheme.white,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                         IconButton(
                           onPressed: () {
-                            setState(() {
-                              if (_num < 15) {
-                                _num++;
-                              }
-                            });
+                            if (limitNum - bookingNum > selectNum) {
+                              setState(() {
+                                selectNum++;
+                              });
+                            }
                           },
                           icon: Icon(Icons.add, color: isLightMode ? AppTheme.darkText : AppTheme.white),
                         ),
@@ -144,32 +176,40 @@ class _BookingScreenState extends State<BookingScreen> {
                         backgroundColor: MaterialStateProperty.all(isLightMode ? AppTheme.nearlyBlack : AppTheme.white),
                       ),
                       onPressed: () {
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (context) {
-                            return AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              title: const Text("確認", textAlign: TextAlign.center),
-                              content: const Text("予約内容に間違いありませんか？"),
-                              actions: [
-                                TextButton(
-                                  child: const Text("No"),
-                                  onPressed: () => Navigator.pop(context),
+                        if (selectNum != 0) {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) {
+                              return AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                TextButton(
-                                  child: const Text("Yes"),
-                                  onPressed: () {
-                                    //データベースへ登録
-                                    doBooking(widget.user, _selectedDate, _selectedTime, _num);
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
+                                title: const Text("確認", textAlign: TextAlign.center),
+                                content: const Text("予約内容に間違いありませんか？"),
+                                actions: [
+                                  TextButton(
+                                    child: const Text("No"),
+                                    onPressed: () => Navigator.pop(context),
+                                  ),
+                                  TextButton(
+                                    child: const Text("Yes"),
+                                    onPressed: () {
+                                      doBooking(widget.user, selectedDate, selectedTime, selectNum);
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return dialog(context, '人数を選択してください');
+                            },
+                          );
+                        }
                       },
                       child: Text(
                         'Booking',
@@ -190,21 +230,42 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 
+  Future<List> getBookingList() async {
+    List docList = [];
+    await FirebaseFirestore.instance.collection('booking_list').get().then(
+          (QuerySnapshot querySnapshot) => {
+            // ignore: avoid_function_literals_in_foreach_calls
+            querySnapshot.docs.forEach(
+              (doc) {
+                docList.add(doc.id);
+              },
+            ),
+          },
+        );
+    return Future<List>.value(docList);
+  }
+
   Future<void> doBooking(AppUser appUser, DateTime date, TimeOfDay time, int num) async {
     try {
-      final DocumentReference ref = FirebaseFirestore.instance.collection('booking_list').doc();
-      ref.set(
-        {
-          'name': appUser.name,
-          'tel': appUser.phone,
-          'email': appUser.email,
-          'num': num,
-          'date': date,
-          'time': time.format(context),
-        },
-      );
-      Navigator.pop(context);
-      showSnackBar(context, '予約完了', true);
+      if (num != 0) {
+        final DocumentReference ref = FirebaseFirestore.instance.collection('booking_list').doc();
+        ref.set(
+          {
+            'name': appUser.name,
+            'tel': appUser.phone,
+            'email': appUser.email,
+            'num': num,
+            'date': date,
+            'time': time.format(context),
+          },
+        );
+        Navigator.pop(context);
+        showSnackBar(context, '予約完了', true);
+        setState(() {
+          selectNum = 0;
+        });
+        getCollections();
+      }
     } catch (e) {
       showSnackBar(context, '予約失敗', false);
     }
