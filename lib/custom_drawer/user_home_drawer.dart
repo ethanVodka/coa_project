@@ -2,15 +2,13 @@ import 'package:coa_project/auth/signin_screen.dart';
 import '../app_theme.dart';
 import 'package:flutter/material.dart';
 import '../auth/signout_model.dart';
-import '../models/user_model.dart';
 
 class UserHomeDrawer extends StatefulWidget {
-  const UserHomeDrawer({required this.appUser, Key? key, this.screenIndex, this.iconAnimationController, this.callBackIndex}) : super(key: key);
+  const UserHomeDrawer({Key? key, this.screenIndex, this.iconAnimationController, this.callBackIndex}) : super(key: key);
 
   final AnimationController? iconAnimationController;
   final DrawerIndex? screenIndex;
   final Function(DrawerIndex)? callBackIndex;
-  final AppUser appUser;
   @override
   UserHomeDrawerState createState() => UserHomeDrawerState();
 }
@@ -95,7 +93,7 @@ class UserHomeDrawerState extends State<UserHomeDrawer> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8, left: 4),
                     child: Text(
-                      widget.appUser.name,
+                      'COA',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: isLightMode ? AppTheme.grey : AppTheme.white,
