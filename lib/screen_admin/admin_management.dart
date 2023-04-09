@@ -2,9 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import '../app_theme.dart';
-import '../home_admin.dart';
-import '../models/homelist.dart';
-import '../utils.dart';
 
 class AminManagementScreen extends StatefulWidget {
   const AminManagementScreen({super.key});
@@ -26,10 +23,10 @@ class _AminManagementScreenState extends State<AminManagementScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            appBar(context, 'Manaegement'),
+            appBar(),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance.collection('booking_list').orderBy('date').snapshots(),
+                stream: getSnapshot(),
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(
@@ -42,9 +39,9 @@ class _AminManagementScreenState extends State<AminManagementScreen> {
                       scrollDirection: Axis.vertical,
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
-                        mainAxisSpacing: 12.0,
+                        mainAxisSpacing: 10.0,
                         crossAxisSpacing: 12.0,
-                        childAspectRatio: 1.5,
+                        childAspectRatio: 5.0,
                       ),
                       itemCount: snapshot.data?.docs.length,
                       itemBuilder: (context, index) => buildManagementListItem(context, snapshot.data!.docs[index]),
@@ -55,6 +52,66 @@ class _AminManagementScreenState extends State<AminManagementScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getSnapshot() => FirebaseFirestore.instance.collection('booking_list').orderBy('date').snapshots();
+
+  Widget appBar() {
+    var brightness = MediaQuery.of(context).platformBrightness;
+    bool isLightMode = brightness == Brightness.light;
+    return SizedBox(
+      height: AppBar().preferredSize.height,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 8, left: 8),
+            child: SizedBox(
+              width: AppBar().preferredSize.height - 8,
+              height: AppBar().preferredSize.height - 8,
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(
+                  'Management',
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: isLightMode ? AppTheme.darkText : AppTheme.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8, right: 8),
+            child: Container(
+              width: AppBar().preferredSize.height - 8,
+              height: AppBar().preferredSize.height - 8,
+              color: isLightMode ? Colors.white : AppTheme.nearlyBlack,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(AppBar().preferredSize.height),
+                  child: Icon(
+                    Icons.settings,
+                    color: isLightMode ? AppTheme.darkGrey : AppTheme.white,
+                  ),
+                  onTap: () {
+                    setState(() {
+                      //multiple = !multiple;
+                    });
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -70,50 +127,112 @@ class _AminManagementScreenState extends State<AminManagementScreen> {
     String reserveTime = document['time'];
 
     return FlipCard(
-      fill: Fill.fillBack, // Fill the back side of the card to make in the same size as the front.
-      direction: FlipDirection.HORIZONTAL, // default
+      fill: Fill.fillBack,
+      direction: FlipDirection.VERTICAL,
       side: CardSide.FRONT,
       front: Container(
         decoration: BoxDecoration(
           color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
-          border: Border.all(width: 4),
-          borderRadius: BorderRadius.circular(12),
+          border: Border.all(width: 3),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: ListTile(
-          leading: SizedBox(
-            child: Image.asset('assets/images/small_logo.png'),
-          ),
+          leading: Image.asset('assets/images/small_logo.png'),
           title: Text(
             name,
-            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 20,
               color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
               fontWeight: FontWeight.w700,
             ),
           ),
-          subtitle: Column(
-            children: [
-              const SizedBox(height: 50),
-              Text(numberOfPeople),
-              Text(reserveTime),
-            ],
-          ),
-          trailing: Text(
-            reserveDate,
-            style: TextStyle(
-              fontSize: 10,
-              color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
-              fontWeight: FontWeight.w700,
+          trailing: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Text(
+                  reserveDate,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Text(
+                  reserveTime,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
       ),
       back: Container(
         decoration: BoxDecoration(
-          color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
-          border: Border.all(width: 4),
-          borderRadius: BorderRadius.circular(12),
+          color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
+          border: Border.all(width: 3),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: ListTile(
+          leading: Image.asset('assets/images/small_logo.png'),
+          title: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '予約人数 : $numberOfPeople',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                Text(
+                  '電話番号 : $tel',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          trailing: IconButton(
+            icon: const Icon(Icons.more_vert),
+            onPressed: () {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) {
+                  return AlertDialog(
+                    backgroundColor: isLightMode == true ? AppTheme.nearlyWhite : AppTheme.white,
+                    title: const Text("予約内容編集", textAlign: TextAlign.center),
+                    content: const Text('予約を削除し、枠を開けます\nよろしですか？'),
+                    actions: [
+                      TextButton(
+                        child: const Text("No"),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                      TextButton(
+                        child: const Text("Yes"),
+                        onPressed: () async {
+                          var mainReference = FirebaseFirestore.instance.collection('booking_list').doc(document.id);
+                          mainReference.delete();
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );

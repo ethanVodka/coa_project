@@ -165,7 +165,8 @@ class _BookingScreenState extends State<BookingScreen> {
                         ),
                       ],
                     ),
-                    Expanded(
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.28,
                       child: ClipRRect(
                         borderRadius: const BorderRadius.all(Radius.circular(60.0)),
                         child: Image.asset('assets/images/booking.png'),
@@ -214,7 +215,7 @@ class _BookingScreenState extends State<BookingScreen> {
                       child: Text(
                         'Booking',
                         style: TextStyle(
-                          fontSize: 23,
+                          fontSize: 24,
                           color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
                           fontWeight: FontWeight.w700,
                         ),
