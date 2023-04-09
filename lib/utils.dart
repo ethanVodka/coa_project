@@ -10,7 +10,15 @@ AlertDialog dialog(BuildContext context, String msg) {
       borderRadius: BorderRadius.circular(10.0),
     ),
     backgroundColor: isLightMode == true ? AppTheme.white : AppTheme.nearlyBlack,
-    content: Text(msg),
+    content: Text(
+      msg,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontSize: 15,
+        color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+        fontWeight: FontWeight.w400,
+      ),
+    ),
     actions: [
       TextButton(
           onPressed: () {
@@ -55,6 +63,9 @@ Widget appBar(BuildContext context, String title) {
 }
 
 Future<void> showSnackBar(BuildContext context, String msg, bool isSuccess) async {
+  var brightness = MediaQuery.of(context).platformBrightness;
+  bool isLightMode = brightness == Brightness.light;
+
   final snackBar = SnackBar(
     content: Row(
       children: [
@@ -63,7 +74,7 @@ Future<void> showSnackBar(BuildContext context, String msg, bool isSuccess) asyn
         Center(
           child: Text(
             msg,
-            style: const TextStyle(color: Colors.black),
+            style: TextStyle(color: isLightMode == true ? AppTheme.white : AppTheme.nearlyBlack),
           ),
         ),
       ],
@@ -74,13 +85,17 @@ Future<void> showSnackBar(BuildContext context, String msg, bool isSuccess) asyn
     showCloseIcon: true,
     onVisible: () {},
     elevation: 4.0,
-    backgroundColor: Colors.white,
-    closeIconColor: Colors.grey,
+    backgroundColor: isLightMode == true ? AppTheme.nearlyBlack : AppTheme.white,
+    closeIconColor: isLightMode == true ? AppTheme.white : AppTheme.nearlyBlack,
     clipBehavior: Clip.hardEdge,
     dismissDirection: DismissDirection.horizontal,
     behavior: SnackBarBehavior.floating,
     padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
-    margin: const EdgeInsetsDirectional.all(16),
+    margin: EdgeInsets.only(
+      left: 18.0,
+      right: 18.0,
+      bottom: MediaQuery.of(context).size.height * 0.3,
+    ),
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

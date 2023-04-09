@@ -15,7 +15,7 @@ class BookingScreen extends StatefulWidget {
 
 class _BookingScreenState extends State<BookingScreen> {
   DateTime selectedDate = DateTime.now();
-  TimeOfDay selectedTime = TimeOfDay.now();
+  TimeOfDay selectedTime = const TimeOfDay(hour: 20, minute: 00);
   int bookingNum = 0;
   //今後変更箇所
   int limitNum = 8;
@@ -81,6 +81,7 @@ class _BookingScreenState extends State<BookingScreen> {
                       onPressed: () {
                         DatePicker.showDatePicker(
                           context,
+                          minTime: DateTime.now(),
                           showTitleActions: true,
                           onConfirm: (date) {
                             setState(() {
@@ -110,12 +111,24 @@ class _BookingScreenState extends State<BookingScreen> {
                       onPressed: () {
                         showTimePicker(
                           context: context,
-                          initialTime: selectedTime,
+                          initialTime: const TimeOfDay(hour: 20, minute: 00),
                         ).then((value) {
+                          DateTime startTime = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 19, 59, 59);
+                          DateTime endTime = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 22, 1, 1);
                           if (value != null) {
-                            setState(() {
-                              selectedTime = value;
-                            });
+                            DateTime time = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, value.hour, value.minute);
+                            if (time.isAfter(startTime) && time.isBefore(endTime)) {
+                              setState(() {
+                                selectedTime = value;
+                              });
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return dialog(context, '営業時間内の\n8:00 ~ 22:00 の間で選択してください');
+                                },
+                              );
+                            }
                           }
                         });
                       },
@@ -183,11 +196,43 @@ class _BookingScreenState extends State<BookingScreen> {
                             barrierDismissible: false,
                             builder: (context) {
                               return AlertDialog(
+                                backgroundColor: isLightMode == true ? AppTheme.white : AppTheme.nearlyBlack,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                title: const Text("確認", textAlign: TextAlign.center),
-                                content: const Text("予約内容に間違いありませんか？"),
+                                title: Text(
+                                  "確認",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "予約内容に間違いありませんか？",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Text(
+                                      "日付 : ${selectedDate.toString().substring(0, 10)}\n時間 : ${selectedTime.format(context)}\n人数 : $selectNum",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                                 actions: [
                                   TextButton(
                                     child: const Text("No"),

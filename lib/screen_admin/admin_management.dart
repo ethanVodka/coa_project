@@ -33,6 +33,18 @@ class _AminManagementScreenState extends State<AminManagementScreen> {
                       child: CircularProgressIndicator(),
                     );
                   } else {
+                    if (snapshot.data!.docs.isEmpty) {
+                      return Center(
+                        child: Text(
+                          'no booking',
+                          style: TextStyle(
+                            fontSize: 30,
+                            color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      );
+                    }
                     return GridView.builder(
                       padding: const EdgeInsets.only(top: 0, left: 12, right: 12),
                       physics: const BouncingScrollPhysics(),
@@ -117,6 +129,7 @@ class _AminManagementScreenState extends State<AminManagementScreen> {
   }
 
   Widget buildManagementListItem(BuildContext context, QueryDocumentSnapshot<Object?> document) {
+    GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
     var brightness = MediaQuery.of(context).platformBrightness;
     bool isLightMode = brightness == Brightness.light;
 
@@ -127,6 +140,7 @@ class _AminManagementScreenState extends State<AminManagementScreen> {
     String reserveTime = document['time'];
 
     return FlipCard(
+      key: cardKey,
       fill: Fill.fillBack,
       direction: FlipDirection.VERTICAL,
       side: CardSide.FRONT,
@@ -204,7 +218,10 @@ class _AminManagementScreenState extends State<AminManagementScreen> {
             ),
           ),
           trailing: IconButton(
-            icon: const Icon(Icons.more_vert),
+            icon: Icon(
+              Icons.more_vert,
+              color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+            ),
             onPressed: () {
               showDialog(
                 context: context,
@@ -225,6 +242,7 @@ class _AminManagementScreenState extends State<AminManagementScreen> {
                           var mainReference = FirebaseFirestore.instance.collection('booking_list').doc(document.id);
                           mainReference.delete();
                           Navigator.pop(context);
+                          cardKey.currentState?.toggleCard();
                         },
                       ),
                     ],
