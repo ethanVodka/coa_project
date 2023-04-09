@@ -1,4 +1,4 @@
-package com.example.coa_project
+package com.ethan.coa
 
 import io.flutter.embedding.android.FlutterActivity
 

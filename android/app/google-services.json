@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:604754175630:android:8fcff77e4f508873d4cbdf",
+        "mobilesdk_app_id": "1:604754175630:android:461af5a9ce12b3ced4cbdf",
         "android_client_info": {
-          "package_name": "com.example.coa_project"
+          "package_name": "com.ethan.coa"
         }
       },
       "oauth_client": [
@@ -29,6 +29,13 @@
             {
               "client_id": "604754175630-3mdrmk7k0soobseo07v07m42161c492d.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "604754175630-lkcghksceoa0egasshp4pkgvk89pso3l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.coaProject"
+              }
             }
           ]
         }
