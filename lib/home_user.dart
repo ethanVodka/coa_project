@@ -1,6 +1,6 @@
 import 'app_theme.dart';
 import 'package:flutter/material.dart';
-import 'models/homelist.dart';
+import 'models/user_homelist.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -10,7 +10,7 @@ class UserHome extends StatefulWidget {
 }
 
 class UserHomeState extends State<UserHome> with TickerProviderStateMixin {
-  List<HomeList> homeList = HomeList.homeList;
+  List<UserHomeList> homeList = UserHomeList.homeList;
   AnimationController? animationController;
   bool multiple = false;
 
@@ -169,7 +169,7 @@ class UserHomeState extends State<UserHome> with TickerProviderStateMixin {
 class HomeListView extends StatelessWidget {
   const HomeListView({Key? key, this.listData, this.callBack, this.animationController, this.animation}) : super(key: key);
 
-  final HomeList? listData;
+  final UserHomeList? listData;
   final VoidCallback? callBack;
   final AnimationController? animationController;
   final Animation<double>? animation;

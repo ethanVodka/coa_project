@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HomeList {
-  HomeList({
+class UserHomeList {
+  UserHomeList({
     this.navigateScreen,
     this.imagePath = '',
   });
@@ -9,24 +9,24 @@ class HomeList {
   Widget? navigateScreen;
   String imagePath;
 
-  static List<HomeList> homeList = [
-    HomeList(
+  static List<UserHomeList> homeList = [
+    UserHomeList(
       imagePath: 'assets/images/text_logo_opa.png',
       //navigateScreen: DesignCourseHomeScreen(),
     ),
-    HomeList(
+    UserHomeList(
       imagePath: 'assets/images/cocktail_1.png',
       //navigateScreen: IntroductionAnimationScreen(),
     ),
-    HomeList(
+    UserHomeList(
       imagePath: 'assets/images/cocktail_2.png',
       //navigateScreen: HotelHomeScreen(),
     ),
-    HomeList(
+    UserHomeList(
       imagePath: 'assets/images/cocktail_3.png',
       //navigateScreen: FitnessAppHomeScreen(),
     ),
-    HomeList(
+    UserHomeList(
       imagePath: 'assets/images/entrance.png',
       //navigateScreen: DesignCourseHomeScreen(),
     ),

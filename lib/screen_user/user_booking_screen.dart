@@ -84,10 +84,19 @@ class _BookingScreenState extends State<BookingScreen> {
                           minTime: DateTime.now(),
                           showTitleActions: true,
                           onConfirm: (date) {
-                            setState(() {
-                              selectedDate = date;
-                              getCollections();
-                            });
+                            if (date.weekday != DateTime.monday && date.weekday != DateTime.sunday) {
+                              setState(() {
+                                selectedDate = date;
+                                getCollections();
+                              });
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return dialog(context, '日、月曜日は定休日です');
+                                },
+                              );
+                            }
                           },
                           currentTime: selectedDate,
                           locale: LocaleType.jp,
@@ -125,7 +134,7 @@ class _BookingScreenState extends State<BookingScreen> {
                               showDialog(
                                 context: context,
                                 builder: (context) {
-                                  return dialog(context, '営業時間内の\n8:00 ~ 22:00 の間で選択してください');
+                                  return dialog(context, '8:00 ~ 22:00 の間で選択してください');
                                 },
                               );
                             }
