@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import '../app_theme.dart';
 
 class AminManagementScreen extends StatefulWidget {
@@ -11,6 +12,20 @@ class AminManagementScreen extends StatefulWidget {
 }
 
 class _AminManagementScreenState extends State<AminManagementScreen> {
+  DateTime selectDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0);
+  bool isAll = true;
+  getSnapShot() {
+    Stream<QuerySnapshot<Map<String, dynamic>>> snap;
+    DateTime start = DateTime(selectDate.year, selectDate.month, selectDate.day, 0, 0, 0);
+    DateTime end = DateTime(selectDate.year, selectDate.month, selectDate.day, 23, 29, 59);
+    if (isAll) {
+      snap = FirebaseFirestore.instance.collection('booking_list').orderBy('date').snapshots();
+    } else {
+      snap = FirebaseFirestore.instance.collection('booking_list').where('date', isGreaterThanOrEqualTo: start, isLessThanOrEqualTo: end).snapshots();
+    }
+    return snap;
+  }
+
   @override
   Widget build(BuildContext context) {
     var brightness = MediaQuery.of(context).platformBrightness;
@@ -24,9 +39,64 @@ class _AminManagementScreenState extends State<AminManagementScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             appBar(),
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(isLightMode ? AppTheme.nearlyBlack : AppTheme.white)),
+                        onPressed: () {
+                          DatePicker.showDatePicker(
+                            context,
+                            minTime: DateTime.now(),
+                            showTitleActions: true,
+                            onConfirm: (date) {
+                              setState(() {
+                                selectDate = date;
+                                isAll = false;
+                              });
+                            },
+                            currentTime: selectDate,
+                            locale: LocaleType.jp,
+                          );
+                        },
+                        child: Text(
+                          selectDate.toString().substring(0, 10),
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(isLightMode ? AppTheme.nearlyBlack : AppTheme.white)),
+                        onPressed: () {
+                          setState(() {
+                            selectDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0);
+                            isAll = true;
+                          });
+                        },
+                        child: Text(
+                          'Clear',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream: getSnapshot(),
+                stream: getSnapShot(),
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(
@@ -67,8 +137,6 @@ class _AminManagementScreenState extends State<AminManagementScreen> {
       ),
     );
   }
-
-  Stream<QuerySnapshot<Map<String, dynamic>>> getSnapshot() => FirebaseFirestore.instance.collection('booking_list').orderBy('date').snapshots();
 
   Widget appBar() {
     var brightness = MediaQuery.of(context).platformBrightness;
