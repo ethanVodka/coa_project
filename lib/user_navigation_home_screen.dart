@@ -85,7 +85,7 @@ class UserNavigationHomeScreenState extends State<UserNavigationHomeScreen> {
           break;
         case DrawerIndex.account:
           setState(() {
-            screenView = const AccountScreen();
+            screenView = AccountScreen(user: appUser!);
           });
           break;
         default:
