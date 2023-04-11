@@ -46,65 +46,68 @@ class _AccountScreenState extends State<AccountScreen> {
                       width: MediaQuery.of(context).size.width,
                       child: Column(
                         children: [
-                          setUserInfo(isLightMode, widget.user!.name, '名前 :', (value) {
+                          _setUserInfo(isLightMode, widget.user!.name, '名前 :', (value) {
                             name = value;
                           }),
-                          setUserInfo(isLightMode, widget.user!.phone, '電話番号 :', (value) {
+                          _setUserInfo(isLightMode, widget.user!.phone, '電話番号 :', (value) {
                             phone = value;
                           }),
-                          Visibility(
-                            visible: isEditable,
-                            child: ElevatedButton.icon(
-                              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(isLightMode ? AppTheme.nearlyBlack : AppTheme.white)),
-                              onPressed: () async {
-                                if (name == null && phone == null) {
-                                  return;
-                                }
-
-                                try {
-                                  User user = FirebaseAuth.instance.currentUser!;
-
-                                  if (name != widget.user!.name && name != null) {
-                                    await FirebaseFirestore.instance.collection('users').doc(user.uid).collection('register').doc('user').update({
-                                      'name': name,
-                                    });
-
-                                    widget.user?.name = name!;
+                          Padding(
+                            padding: const EdgeInsets.only(top: 30.0),
+                            child: Visibility(
+                              visible: isEditable,
+                              child: ElevatedButton.icon(
+                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(isLightMode ? AppTheme.nearlyBlack : AppTheme.white)),
+                                onPressed: () async {
+                                  if (name == null && phone == null) {
+                                    return;
                                   }
-                                  if (phone != widget.user!.phone && phone != null) {
-                                    await FirebaseFirestore.instance.collection('users').doc(user.uid).collection('register').doc('user').update({
-                                      'phone': phone,
-                                    });
 
-                                    widget.user?.phone = phone!;
+                                  try {
+                                    User user = FirebaseAuth.instance.currentUser!;
+
+                                    if (name != widget.user!.name && name != null) {
+                                      await FirebaseFirestore.instance.collection('users').doc(user.uid).collection('register').doc('user').update({
+                                        'name': name,
+                                      });
+
+                                      widget.user?.name = name!;
+                                    }
+                                    if (phone != widget.user!.phone && phone != null) {
+                                      await FirebaseFirestore.instance.collection('users').doc(user.uid).collection('register').doc('user').update({
+                                        'phone': phone,
+                                      });
+
+                                      widget.user?.phone = phone!;
+                                    }
+                                    // ignore: use_build_context_synchronously
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return dialog(context, '更新完了しました');
+                                      },
+                                    );
+                                  } catch (_) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return dialog(context, '更新に失敗しました');
+                                      },
+                                    );
                                   }
-                                  // ignore: use_build_context_synchronously
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return dialog(context, '更新完了しました');
-                                    },
-                                  );
-                                } catch (_) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return dialog(context, '更新に失敗しました');
-                                    },
-                                  );
-                                }
 
-                                setState(() {
-                                  isEditable = false;
-                                });
-                              },
-                              icon: Icon(Icons.person, color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack),
-                              label: Text(
-                                'UPDATE',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
-                                  fontWeight: FontWeight.w700,
+                                  setState(() {
+                                    isEditable = false;
+                                  });
+                                },
+                                icon: Icon(Icons.person, color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack),
+                                label: Text(
+                                  'UPDATE',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ),
                             ),
@@ -122,7 +125,7 @@ class _AccountScreenState extends State<AccountScreen> {
     );
   }
 
-  setUserInfo(bool isLightMode, String text, String header, Function(String value) changeValue) {
+  _setUserInfo(bool isLightMode, String text, String header, Function(String value) changeValue) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [

@@ -74,7 +74,7 @@ class AdminNavigationHomeScreenState extends State<AdminNavigationHomeScreen> {
           break;
         case DrawerIndexAdmin.account:
           setState(() {
-            screenView = const AdminAccountScreen();
+            screenView = AdminAccountScreen(user: appUser!);
           });
           break;
         case DrawerIndexAdmin.manage:
