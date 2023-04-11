@@ -25,6 +25,8 @@ dependencies:
   animations: 
   flutter_datetime_picker:
   flip_card: 
+  introduction_screen: ^3.1.7
+  shared_preferences: ^2.1.0
 
 dev_dependencies:
   flutter_test:

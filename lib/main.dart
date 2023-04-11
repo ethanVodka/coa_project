@@ -44,7 +44,7 @@ class CoaApp extends StatelessWidget {
   }
 
   //前回ユーザーから遷移画面を確定
-  Widget _checkUser() {
+  _checkUser() {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       if (user.uid == admin || user.uid == admin_2) {
