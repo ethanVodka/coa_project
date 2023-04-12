@@ -70,15 +70,17 @@ class _AccountScreenState extends State<AccountScreen> {
                                       await FirebaseFirestore.instance.collection('users').doc(user.uid).collection('register').doc('user').update({
                                         'name': name,
                                       });
-
-                                      widget.user?.name = name!;
+                                      setState(() {
+                                        widget.user?.name = name!;
+                                      });
                                     }
                                     if (phone != widget.user!.phone && phone != null) {
                                       await FirebaseFirestore.instance.collection('users').doc(user.uid).collection('register').doc('user').update({
                                         'phone': phone,
                                       });
-
-                                      widget.user?.phone = phone!;
+                                      setState(() {
+                                        widget.user?.phone = phone!;
+                                      });
                                     }
                                     // ignore: use_build_context_synchronously
                                     showDialog(
@@ -153,10 +155,9 @@ class _AccountScreenState extends State<AccountScreen> {
               color: isLightMode ? AppTheme.darkText : AppTheme.white,
               fontWeight: FontWeight.w700,
             ),
-            onSaved: (value) {
-              if (value != null) {
-                changeValue(value);
-              }
+            onChanged: (value) {
+              changeValue(value);
+              TextEditingController(text: value);
             },
           ),
         ),
