@@ -59,6 +59,9 @@ class _AdminAccountScreenState extends State<AdminAccountScreen> {
                               child: ElevatedButton.icon(
                                 style: ButtonStyle(backgroundColor: MaterialStateProperty.all(isLightMode ? AppTheme.nearlyBlack : AppTheme.white)),
                                 onPressed: () async {
+                                  setState(() {
+                                    isEditable = false;
+                                  });
                                   if (name == null && phone == null) {
                                     return;
                                   }
@@ -209,8 +212,10 @@ class _AdminAccountScreenState extends State<AdminAccountScreen> {
               color: isLightMode ? AppTheme.darkText : AppTheme.white,
               fontWeight: FontWeight.w700,
             ),
-            onChanged: (value) {
-              changeValue(value);
+            onSaved: (value) {
+              if (value != null) {
+                changeValue(value);
+              }
             },
           ),
         ),
