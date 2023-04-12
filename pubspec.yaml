@@ -27,6 +27,7 @@ dependencies:
   flip_card: 
   introduction_screen: ^3.1.7
   shared_preferences: ^2.1.0
+  flutter_launcher_icons: ^0.13.0
 
 dev_dependencies:
   flutter_test:
@@ -69,3 +70,9 @@ flutter:
               - asset: assets/fonts/Roboto-Regular.ttf
               - asset: assets/fonts/Roboto-Medium.ttf
                 weight: 400
+
+flutter_icons:
+  ios: true
+  android: true
+  image_path: "assets/images/app_icon.png"
+  remove_alpha_ios: true                
