@@ -153,8 +153,10 @@ class _AccountScreenState extends State<AccountScreen> {
               color: isLightMode ? AppTheme.darkText : AppTheme.white,
               fontWeight: FontWeight.w700,
             ),
-            onChanged: (value) {
-              changeValue(value);
+            onSaved: (value) {
+              if (value != null) {
+                changeValue(value);
+              }
             },
           ),
         ),
