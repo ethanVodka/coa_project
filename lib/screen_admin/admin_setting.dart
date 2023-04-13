@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 import '../app_theme.dart';
+import '../utils.dart';
 
 class StoreSetting extends StatefulWidget {
   const StoreSetting({super.key});
@@ -13,6 +15,21 @@ class StoreSetting extends StatefulWidget {
 class _StoreSettingState extends State<StoreSetting> {
   DateTime selectDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
   int selectNum = 0;
+  bool isEditNum = false;
+  bool isEditDate = false;
+
+  @override
+  void initState() {
+    _getLimit();
+    super.initState();
+  }
+
+  void _getLimit() async {
+    final snap = await FirebaseFirestore.instance.collection('store_settings').doc('limit').get();
+    setState(() {
+      selectNum = int.parse(snap.data()!['max_num'].toString());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +59,7 @@ class _StoreSettingState extends State<StoreSetting> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 20.0),
                         child: Text(
-                          '店の休日 :',
+                          '休日 :',
                           style: TextStyle(
                             fontSize: 24,
                             color: isLightMode ? AppTheme.darkText : AppTheme.white,
@@ -61,6 +78,7 @@ class _StoreSettingState extends State<StoreSetting> {
                               setState(() {
                                 selectDate = date;
                               });
+                              isEditDate = true;
                             },
                             currentTime: selectDate,
                             locale: LocaleType.jp,
@@ -81,7 +99,7 @@ class _StoreSettingState extends State<StoreSetting> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 20.0, top: 40.0),
                         child: Text(
-                          '予約上限 :',
+                          '上限 :',
                           style: TextStyle(
                             fontSize: 24,
                             color: isLightMode ? AppTheme.darkText : AppTheme.white,
@@ -93,7 +111,14 @@ class _StoreSettingState extends State<StoreSetting> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if (selectNum > 0) {
+                                  selectNum--;
+                                }
+                              });
+                              isEditNum = true;
+                            },
                             icon: Icon(Icons.remove, color: isLightMode ? AppTheme.darkText : AppTheme.white),
                           ),
                           Padding(
@@ -108,7 +133,12 @@ class _StoreSettingState extends State<StoreSetting> {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                selectNum++;
+                              });
+                              isEditNum = true;
+                            },
                             icon: Icon(Icons.add, color: isLightMode ? AppTheme.darkText : AppTheme.white),
                           ),
                         ],
@@ -119,7 +149,37 @@ class _StoreSettingState extends State<StoreSetting> {
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(isLightMode ? AppTheme.nearlyBlack : AppTheme.white),
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            try {
+                              if (isEditNum) {
+                                await FirebaseFirestore.instance.collection('store_settings').doc('limit').update({
+                                  'max_num': selectNum,
+                                });
+                                isEditNum = false;
+                              }
+                              if (isEditDate) {
+                                await FirebaseFirestore.instance.collection('store_settings').doc('rest_date').update({
+                                  'date': selectDate,
+                                });
+                                isEditDate = false;
+                              }
+                              // ignore: use_build_context_synchronously
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return dialog(context, '更新しました');
+                                },
+                              );
+                            } catch (_) {
+                              // ignore: use_build_context_synchronously
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return dialog(context, '更新に失敗しました');
+                                },
+                              );
+                            }
+                          },
                           child: Text(
                             'Update',
                             style: TextStyle(

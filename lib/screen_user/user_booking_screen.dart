@@ -18,9 +18,9 @@ class _BookingScreenState extends State<BookingScreen> {
   TimeOfDay selectedTime = const TimeOfDay(hour: 20, minute: 00);
   int bookingNum = 0;
   //今後変更箇所
-  int limitNum = 8;
+  int limitNum = 0;
   int selectNum = 0;
-  void getCollections() async {
+  void _getCollections() async {
     int num = 0;
     DateTime start = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 0, 0);
     DateTime end = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 23, 59, 59);
@@ -40,9 +40,17 @@ class _BookingScreenState extends State<BookingScreen> {
     }
   }
 
+  void _getLimit() async {
+    final snap = await FirebaseFirestore.instance.collection('store_settings').doc('limit').get();
+    setState(() {
+      limitNum = int.parse(snap.data()!['max_num'].toString());
+    });
+  }
+
   @override
   void initState() {
-    getCollections();
+    _getCollections();
+    _getLimit();
     super.initState();
   }
 
@@ -83,20 +91,25 @@ class _BookingScreenState extends State<BookingScreen> {
                           context,
                           minTime: DateTime.now(),
                           showTitleActions: true,
-                          onConfirm: (date) {
-                            if (date.weekday != DateTime.monday && date.weekday != DateTime.sunday) {
-                              setState(() {
-                                selectedDate = date;
-                                getCollections();
-                              });
-                            } else {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return dialog(context, '日、月曜日は定休日です');
-                                },
-                              );
-                            }
+                          onConfirm: (date) async {
+                            try {
+                              final snap = await FirebaseFirestore.instance.collection('store_settings').doc('rest_date').get();
+                              DateTime rest = snap.data()!['date'].toDate();
+                              if (date.weekday != DateTime.monday && date.weekday != DateTime.sunday && date != rest) {
+                                setState(() {
+                                  selectedDate = date;
+                                  _getCollections();
+                                });
+                              } else {
+                                // ignore: use_build_context_synchronously
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return dialog(context, '選択日は定休日です');
+                                  },
+                                );
+                              }
+                            } catch (_) {}
                           },
                           currentTime: selectedDate,
                           locale: LocaleType.jp,
@@ -319,7 +332,7 @@ class _BookingScreenState extends State<BookingScreen> {
         setState(() {
           selectNum = 0;
         });
-        getCollections();
+        _getCollections();
       }
     } catch (e) {
       showSnackBar(context, '予約失敗', false);
