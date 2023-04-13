@@ -180,7 +180,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         Padding(
                           padding: const EdgeInsets.all(24.0),
                           child: Text(
-                            '$selectNum/${limitNum - bookingNum}',
+                            '$selectNum/${(limitNum - bookingNum) < 0 ? '0' : (limitNum - bookingNum)}',
                             style: TextStyle(
                               fontSize: 40,
                               color: isLightMode ? AppTheme.darkText : AppTheme.white,
