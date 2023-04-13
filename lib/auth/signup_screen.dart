@@ -178,7 +178,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: Icon(Icons.arrow_back_ios_new, color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack),
+                  icon: Icon(Icons.arrow_back, color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack),
                   label: Text(
                     'SiGNIN',
                     style: TextStyle(

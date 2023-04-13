@@ -65,11 +65,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBy1TVEGU7g1ZxioFnz_MuFmHy_tl0NbHA',
-    appId: '1:604754175630:ios:f4ad2a3b239cef58d4cbdf',
+    appId: '1:604754175630:ios:5f847d11dc22a2d3d4cbdf',
     messagingSenderId: '604754175630',
     projectId: 'coa-project-2d439',
     storageBucket: 'coa-project-2d439.appspot.com',
-    iosClientId: '604754175630-lkcghksceoa0egasshp4pkgvk89pso3l.apps.googleusercontent.com',
-    iosBundleId: 'com.example.coaProject',
+    iosClientId: '604754175630-bevb07dp0n97jjt38f7r43pbc7b7esnk.apps.googleusercontent.com',
+    iosBundleId: 'com.ethan.coa',
   );
 }

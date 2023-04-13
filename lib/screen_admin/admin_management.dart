@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import '../app_theme.dart';
+import 'admin_setting.dart';
 
 class AminManagementScreen extends StatefulWidget {
   const AminManagementScreen({super.key});
@@ -183,9 +184,13 @@ class _AminManagementScreenState extends State<AminManagementScreen> {
                     color: isLightMode ? AppTheme.darkGrey : AppTheme.white,
                   ),
                   onTap: () {
-                    setState(() {
-                      //multiple = !multiple;
-                    });
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const StoreSetting();
+                        },
+                      ),
+                    );
                   },
                 ),
               ),
