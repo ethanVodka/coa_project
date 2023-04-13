@@ -68,11 +68,11 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
                 TextFormField(
                   style: TextStyle(color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white),
                   decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.mail, color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white),
                     labelText: 'メールアドレス',
                     labelStyle: TextStyle(
                       color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
                     ),
-                    border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -87,11 +87,11 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
                 TextFormField(
                   style: TextStyle(color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white),
                   decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.key, color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white),
                     labelText: 'パスワード',
                     labelStyle: TextStyle(
                       color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
                     ),
-                    border: const OutlineInputBorder(),
                   ),
                   obscureText: true,
                   validator: (value) {

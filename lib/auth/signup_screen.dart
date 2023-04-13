@@ -63,7 +63,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     labelStyle: TextStyle(
                       color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
                     ),
-                    border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -82,7 +81,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     labelStyle: TextStyle(
                       color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
                     ),
-                    border: const OutlineInputBorder(),
                   ),
                   obscureText: true,
                   validator: (value) {
@@ -102,7 +100,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
                     ),
                     labelText: 'パスワード確認',
-                    border: const OutlineInputBorder(),
                   ),
                   obscureText: true,
                   validator: (value) {
@@ -122,7 +119,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
                     ),
                     labelText: '名前',
-                    border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -141,7 +137,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
                     ),
                     labelText: '電話番号',
-                    border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -184,7 +179,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Navigator.pop(context);
                   },
                   icon: Icon(Icons.arrow_back_ios_new, color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack),
-                  label: const Text(''),
+                  label: Text(
+                    'SiGNIN',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 )
               ],
             ),

@@ -185,41 +185,31 @@ class _AdminAccountScreenState extends State<AdminAccountScreen> {
   }
 
   _setUserInfo(bool isLightMode, String text, String header, Function(String value) changeValue) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text(
-              header,
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 22,
-                color: isLightMode ? AppTheme.darkText : AppTheme.white,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            Expanded(child: Container()),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: TextFormField(
-            readOnly: !isEditable,
-            controller: TextEditingController(text: text),
-            style: TextStyle(
-              fontSize: 24,
-              color: isLightMode ? AppTheme.darkText : AppTheme.white,
-              fontWeight: FontWeight.w700,
-            ),
-            onSaved: (value) {
-              if (value != null) {
-                changeValue(value);
-              }
-            },
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: TextFormField(
+        decoration: InputDecoration(
+          prefixIcon: Icon(
+            header == '名前 :' ? Icons.person : Icons.phone,
+            color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+          ),
+          labelText: header,
+          labelStyle: TextStyle(
+            color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
           ),
         ),
-      ],
+        readOnly: !isEditable,
+        controller: TextEditingController(text: text),
+        style: TextStyle(
+          fontSize: 24,
+          color: isLightMode ? AppTheme.darkText : AppTheme.white,
+          fontWeight: FontWeight.w700,
+        ),
+        onChanged: (value) {
+          changeValue(value);
+          TextEditingController(text: value);
+        },
+      ),
     );
   }
 }

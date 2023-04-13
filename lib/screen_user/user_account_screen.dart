@@ -15,7 +15,7 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   bool isEditable = false;
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? name;
   String? phone;
 
@@ -38,6 +38,7 @@ class _AccountScreenState extends State<AccountScreen> {
               child: Image.asset('assets/images/user_icon.png', alignment: Alignment.center),
             ),
             Form(
+              key: _formKey,
               child: Expanded(
                 child: SingleChildScrollView(
                   child: Padding(
@@ -128,40 +129,31 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   _setUserInfo(bool isLightMode, String text, String header, Function(String value) changeValue) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text(
-              header,
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 22,
-                color: isLightMode ? AppTheme.darkText : AppTheme.white,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            Expanded(child: Container()),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: TextFormField(
-            readOnly: !isEditable,
-            controller: TextEditingController(text: text),
-            style: TextStyle(
-              fontSize: 24,
-              color: isLightMode ? AppTheme.darkText : AppTheme.white,
-              fontWeight: FontWeight.w700,
-            ),
-            onChanged: (value) {
-              changeValue(value);
-              TextEditingController(text: value);
-            },
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: TextFormField(
+        decoration: InputDecoration(
+          prefixIcon: Icon(
+            header == '名前 :' ? Icons.person : Icons.phone,
+            color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
+          ),
+          labelText: header,
+          labelStyle: TextStyle(
+            color: isLightMode ? AppTheme.nearlyBlack : AppTheme.white,
           ),
         ),
-      ],
+        readOnly: !isEditable,
+        controller: TextEditingController(text: text),
+        style: TextStyle(
+          fontSize: 24,
+          color: isLightMode ? AppTheme.darkText : AppTheme.white,
+          fontWeight: FontWeight.w700,
+        ),
+        onChanged: (value) {
+          changeValue(value);
+          TextEditingController(text: value);
+        },
+      ),
     );
   }
 
