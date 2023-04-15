@@ -267,8 +267,9 @@ class _AminManagementScreenState extends State<AminManagementScreen> {
         child: ListTile(
           leading: Image.asset('assets/images/small_logo.png'),
           title: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
             child: Column(
+              //mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
